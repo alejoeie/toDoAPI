@@ -23,6 +23,7 @@ exports.createTask = async (req, res) => {
 
         res.status(200).json({
             status:'success',
+            message: "New Task Added",
             data: {
                 newTask
             }
@@ -33,5 +34,44 @@ exports.createTask = async (req, res) => {
             message: 'A new task cannot be created'
         })
 
+    }
+}
+
+exports.deleteTask = async (req, res) => {
+    try{
+        const deletedTask = await Task.findByIdAndDelete(req.params.id);
+
+        res.status(200).json({
+            status:'success',
+            message: 'Task successfully deleted',
+            data: null
+        })
+    }catch (err) {
+        res.status(404).json({
+            status: 'fail',
+            message: 'Task not found'
+        })
+
+    }
+}
+
+exports.updateTask = async(res, req) => {
+    try {
+        const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators:true
+        })
+        res.status(200).json({
+            status: 'success',
+            message: "Task succesfully updated",
+            data: {
+                updatedTask
+            }
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'fail',
+            message: 'Cannot access to that Task'
+        })
     }
 }

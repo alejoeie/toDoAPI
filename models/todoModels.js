@@ -10,6 +10,10 @@ const todoSchema = new mongoose.Schema({
     deadline: {
         type: Date,
     },
+    completed: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
         default: Date.now()
